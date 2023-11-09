@@ -21,22 +21,14 @@ public class ActorController {
         this.actorService = actorService;
     }
 
-    /* @Autowired
-    ActorRepository actorRepository;
-
-    public ActorController(ActorRepository actorRepository) {
-        this.actorRepository = actorRepository;
-    }
-     */
-
     @GetMapping("/actors")
     public List<Actor> getAllActors() {
         return actorService.getAllActors();
     }
 
     @GetMapping("/actor/{name}")
-    public List<Actor> getActorByFirstName(@PathVariable("name") String firstName) {
-        return actorService.getActorByFirstName(firstName);
+    public List<Actor> getActorByActorName(@PathVariable("name") String actorName) {
+        return actorService.getActorByFirstName(actorName);
     }
 
     @GetMapping("/actor/id/{id}")

@@ -22,8 +22,8 @@ public class ActorService {
         return actorRepository.findAll();
     }
 
-    public List<Actor> getActorByFirstName(String name) {
-        return actorRepository.findByFirstName(name);
+    public List<Actor> getActorByFirstName(String actorName) {
+        return actorRepository.findByActorName(actorName);
     }
 
     public Actor getActorById(Long actorId) {;
