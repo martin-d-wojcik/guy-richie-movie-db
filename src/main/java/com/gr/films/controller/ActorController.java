@@ -33,11 +33,9 @@ public class ActorController {
 
     @GetMapping("/actor/id/{id}")
     public ResponseEntity<Object> getActorById(@PathVariable("id") Long id) {
-        ResponseEntity<Object> obj = actorService.getActorById(id);
-        return obj;
+        // ResponseEntity<Object> obj = actorService.getActorById(id);
+        // return obj;
 
-
-
-        // return actorService.getActorById(id);
+        return actorService.getActorById(id);
     }
 }
