@@ -33,9 +33,11 @@ public class ActorController {
 
     @GetMapping("/actor/id/{id}")
     public ResponseEntity<Object> getActorById(@PathVariable("id") Long id) {
-        // ResponseEntity<Object> obj = actorService.getActorById(id);
-        // return obj;
-
         return actorService.getActorById(id);
+    }
+
+    @PostMapping(value = "actor/add", consumes = "application/json", produces = "application/json")
+    public String addActor(@RequestBody Actor actor) {
+        return actorService.addActor(actor);
     }
 }

@@ -4,7 +4,6 @@ import com.gr.films.model.Actor;
 import com.gr.films.repository.ActorRepository;
 import com.gr.films.response.ApiError;
 import com.gr.films.response.ResponseHandler;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +43,7 @@ public class ActorService {
 
     public ResponseEntity<List<Actor>> getActorByName(String actorName) {
         try {
-            listOfActors = actorRepository.findAll();
+            listOfActors = actorRepository.findByActorName(actorName);
 
             if (listOfActors.isEmpty()) {
                 return new ResponseEntity<>(listOfActors, HttpStatus.NO_CONTENT);
@@ -78,5 +77,11 @@ public class ActorService {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public String addActor(Actor actor) {
+        actorRepository.save(actor);
+
+        return "Created";
     }
 }

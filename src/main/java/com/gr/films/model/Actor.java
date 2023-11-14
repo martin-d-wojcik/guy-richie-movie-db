@@ -15,8 +15,8 @@ public class Actor {
     private String lastName;
     @Column(name = "birth_country")
     private String birthCountry;
-    // @Column(name = "movie_id")
-    // private long movieId;   // foreign key
+    @Column(name = "movie_id")
+    private long movieId;   // foreign key
 
     public Actor(long id, String firstName, String lastName, String birthCountry) {
         this.id = id;
@@ -60,12 +60,11 @@ public class Actor {
         this.birthCountry = birthCountry;
     }
 
-    /* public long getMovieId() {
+    public long getMovieId() {
         return movieId;
     }
 
     public void setMovieId(long movieId) {
         this.movieId = movieId;
     }
-     */
 }
