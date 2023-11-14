@@ -1,9 +1,9 @@
 package com.gr.films.controller;
 
 import com.gr.films.model.Actor;
-import com.gr.films.repository.ActorRepository;
 import com.gr.films.service.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,17 +22,22 @@ public class ActorController {
     }
 
     @GetMapping("/actors")
-    public List<Actor> getAllActors() {
+    public ResponseEntity<List<Actor>> getAllActors() {
         return actorService.getAllActors();
     }
 
     @GetMapping("/actor/{name}")
-    public List<Actor> getActorByActorName(@PathVariable("name") String actorName) {
-        return actorService.getActorByFirstName(actorName);
+    public ResponseEntity<List<Actor>> getActorByActorName(@PathVariable("name") String actorName) {
+        return actorService.getActorByName(actorName);
     }
 
     @GetMapping("/actor/id/{id}")
-    public Actor getActorById(@PathVariable("id") Long id) {
-        return actorService.getActorById(id);
+    public ResponseEntity<Object> getActorById(@PathVariable("id") Long id) {
+        ResponseEntity<Object> obj = actorService.getActorById(id);
+        return obj;
+
+
+
+        // return actorService.getActorById(id);
     }
 }
