@@ -30,8 +30,7 @@ public class MovieService {
         try {
             listOfMovies = movieRepository.findAll();
             return new ResponseEntity<>(listOfMovies, HttpStatus.OK);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -45,10 +44,23 @@ public class MovieService {
             }
 
             return new ResponseEntity<>(movie, HttpStatus.OK);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return ResponseHandler.createResponseBody("Something went terribly wrong here",
                     HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<List<Movie>> getMoviesByReleaseYear(int year) {
+        try {
+            listOfMovies = movieRepository.findByReleaseYear(year);
+
+            if (listOfMovies.isEmpty()) {
+                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(listOfMovies, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

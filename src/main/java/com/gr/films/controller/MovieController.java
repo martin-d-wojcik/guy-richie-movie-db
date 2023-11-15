@@ -29,4 +29,9 @@ public class MovieController {
     public ResponseEntity<Object> getMovieById(@PathVariable("id") Long id) {
         return movieService.getMovieById(id);
     }
+
+    @GetMapping("movie/year/{year}")
+    public ResponseEntity<List<Movie>> getMoviesByReleaseYear(@PathVariable("year") int year) {
+        return movieService.getMoviesByReleaseYear(year);
+    }
 }
