@@ -34,4 +34,9 @@ public class MovieController {
     public ResponseEntity<List<Movie>> getMoviesByReleaseYear(@PathVariable("year") int year) {
         return movieService.getMoviesByReleaseYear(year);
     }
+
+    @PostMapping(value = "/movie/add", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> addMovie(@RequestBody Movie movie) {
+        return movieService.addMovie(movie);
+    }
 }

@@ -63,4 +63,10 @@ public class MovieService {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public ResponseEntity<Object> addMovie(Movie movie) {
+        movieRepository.save(movie);
+        return ResponseHandler.createResponseBody(
+                "Added new movie: " + movie.getTitle(), HttpStatus.CREATED);
+    }
 }
