@@ -1,5 +1,6 @@
 package com.gr.films.service;
 
+import com.gr.films.exception.ValidationException;
 import com.gr.films.model.Movie;
 import com.gr.films.repository.MovieRepository;
 import com.gr.films.response.ApiError;
@@ -65,8 +66,12 @@ public class MovieService {
     }
 
     public ResponseEntity<Object> addMovie(Movie movie) {
-        movieRepository.save(movie);
-        return ResponseHandler.createResponseBody(
-                "Added new movie: " + movie.getTitle(), HttpStatus.CREATED);
+        try {
+            movieRepository.save(movie);
+            return ResponseHandler.createResponseBody(
+                    "Added new movie: " + movie.getTitle(), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

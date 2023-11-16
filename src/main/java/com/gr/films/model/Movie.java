@@ -1,11 +1,13 @@
 package com.gr.films.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "movie")
 public class Movie {
 
+    @NotBlank(message = "Id is required")
     @Id
     private Long id;
 

@@ -5,6 +5,7 @@ import com.gr.films.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class MovieController {
     }
 
     @PostMapping(value = "/movie/add", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Object> addMovie(@RequestBody Movie movie) {
+    public ResponseEntity<Object> addMovie(@Valid @RequestBody Movie movie) {
         return movieService.addMovie(movie);
     }
 }
