@@ -1,5 +1,6 @@
 package com.gr.films.service;
 
+import com.gr.films.exception.NotFoundException;
 import com.gr.films.model.Actor;
 import com.gr.films.repository.ActorRepository;
 import com.gr.films.response.ApiError;
@@ -42,41 +43,21 @@ public class ActorService {
     }
 
     public ResponseEntity<List<Actor>> getActorByName(String actorName) {
-        try {
-            listOfActors = actorRepository.findByActorName(actorName);
+        listOfActors = actorRepository.findByActorName(actorName);
 
-            if (listOfActors.isEmpty()) {
-                return new ResponseEntity<>(listOfActors, HttpStatus.NO_CONTENT);
-            }
-
-            if (actorName == null) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-            }
-
-            return new ResponseEntity<>(listOfActors, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (listOfActors.isEmpty()) {
+            throw new NotFoundException("Couldn't find any actor with the name " + actorName);
         }
+
+        return new ResponseEntity<>(listOfActors, HttpStatus.OK);
     }
 
-    public ResponseEntity<Object> getActorById(Long actorId) {
-        try {
-            actor = actorRepository.findByActorId(actorId);
-
-            if (actor == null) {
-                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-            }
-
-            if (actorId == null) {
-                return  ResponseHandler.createResponseBody(
-                        "Not allowed to parse an empty id.",
-                        HttpStatus.NOT_FOUND);
-            }
-
-            return new ResponseEntity<>(actor, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    public Actor getActorById(Long actorId) {
+        if (actorRepository.findById(actorId).isEmpty()) {
+            throw new NotFoundException("Couldn't find actor with id: " + actorId);
         }
+
+        return actorRepository.findById(actorId).get();
     }
 
     public String addActor(Actor actor) {

@@ -1,6 +1,6 @@
 package com.gr.films.service;
 
-import com.gr.films.exception.ValidationException;
+import com.gr.films.exception.NotFoundException;
 import com.gr.films.model.Movie;
 import com.gr.films.repository.MovieRepository;
 import com.gr.films.response.ApiError;
@@ -36,33 +36,21 @@ public class MovieService {
         }
     }
 
-    public ResponseEntity<Object> getMovieById(Long movieId) {
-        try {
-            movie = movieRepository.findByMovieId(movieId);
-
-            if (movie == null) {
-                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(movie, HttpStatus.OK);
-        } catch (Exception e) {
-            return ResponseHandler.createResponseBody("Something went terribly wrong here",
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+    public Movie getMovieById(Long movieId) {
+        if (movieRepository.findById(movieId).isEmpty()) {
+            throw new NotFoundException("Couldn't find a movie with the id: " + movieId);
         }
+        return movieRepository.findById(movieId).get();
     }
 
     public ResponseEntity<List<Movie>> getMoviesByReleaseYear(int year) {
-        try {
-            listOfMovies = movieRepository.findByReleaseYear(year);
+        listOfMovies = movieRepository.findByReleaseYear(year);
 
-            if (listOfMovies.isEmpty()) {
-                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(listOfMovies, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (listOfMovies.isEmpty()) {
+            throw new NotFoundException("Couldn't find any movies released in: " + year);
         }
+
+        return new ResponseEntity<>(listOfMovies, HttpStatus.OK);
     }
 
     public ResponseEntity<Object> addMovie(Movie movie) {
@@ -75,7 +63,7 @@ public class MovieService {
         }
     }
 
-    public String updateMovie(Movie movie, Long id) {
+    public ResponseEntity<Object> updateMovie(Movie movie, Long id) {
         Movie movieInDatabase = movieRepository.findByMovieId(id);
 
         if (movieInDatabase != null) {
@@ -85,25 +73,24 @@ public class MovieService {
             movieInDatabase.setGenre(movie.getGenre());
             movieInDatabase.setAwards(movie.getAwards());
             movieInDatabase.setReleaseYear(movie.getReleaseYear());
-
             movieRepository.save(movieInDatabase);
 
-            return "Updated.";
+            return new ResponseEntity<>("Updated", HttpStatus.OK);
         }
         else {
-            return "Couldn't find movie with id: " + id;
+            throw new NotFoundException("There is no movie with the id: " + id);
         }
     }
 
-    public String deleteMovie(Long id) {
+    public ResponseEntity<Object> deleteMovie(Long id) {
         Movie movieInDatabase = movieRepository.findByMovieId(id);
 
         if (movieInDatabase != null) {
             movieRepository.deleteById(id);
-            return "Deleted " + movieInDatabase.getTitle();
+            return new ResponseEntity<>("Deleted " + movieInDatabase.getTitle(), HttpStatus.OK);
         }
         else {
-            return "The id: " + id + " doesn't exist in the database";
+            throw new NotFoundException("There is no movie with the id: " + id);
         }
     }
 }

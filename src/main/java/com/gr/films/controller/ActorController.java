@@ -32,7 +32,7 @@ public class ActorController {
     }
 
     @GetMapping("/actor/id/{id}")
-    public ResponseEntity<Object> getActorById(@PathVariable("id") Long id) {
+    public Actor getActorById(@PathVariable("id") Long id) {
         return actorService.getActorById(id);
     }
 
