@@ -75,7 +75,7 @@ public class MovieService {
             movieInDatabase.setReleaseYear(movie.getReleaseYear());
             movieRepository.save(movieInDatabase);
 
-            return new ResponseEntity<>("Updated", HttpStatus.OK);
+            return new ResponseEntity<>("Updated " + movieInDatabase.getTitle(), HttpStatus.OK);
         }
         else {
             throw new NotFoundException("There is no movie with the id: " + id);
