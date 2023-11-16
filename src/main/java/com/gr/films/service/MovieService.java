@@ -1,5 +1,6 @@
 package com.gr.films.service;
 
+import com.gr.films.exception.BadRequestException;
 import com.gr.films.exception.NotFoundException;
 import com.gr.films.model.Movie;
 import com.gr.films.repository.MovieRepository;
@@ -54,19 +55,22 @@ public class MovieService {
     }
 
     public ResponseEntity<Object> addMovie(Movie movie) {
-        try {
-            movieRepository.save(movie);
-            return ResponseHandler.createResponseBody(
-                    "Added new movie: " + movie.getTitle(), HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (movie.getId() == null) {
+            throw new BadRequestException("Id can't be empty");
         }
+
+        movieRepository.save(movie);
+
+        return new ResponseEntity<>("Created " + movie.getTitle(), HttpStatus.OK);
     }
 
     public ResponseEntity<Object> updateMovie(Movie movie, Long id) {
         Movie movieInDatabase = movieRepository.findByMovieId(id);
 
         if (movieInDatabase != null) {
+            if (movie.getTitle().isEmpty()) {
+                throw new BadRequestException("You really shouldn't forget about the title of the movie.");
+            }
             movieInDatabase.setTitle(movie.getTitle());
             movieInDatabase.setWriter(movie.getWriter());
             movieInDatabase.setDirector(movie.getDirector());

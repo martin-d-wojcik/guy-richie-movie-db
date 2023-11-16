@@ -38,7 +38,7 @@ public class ActorService {
 
             return new ResponseEntity<>(listOfActors, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new NotFoundException("Not one actor found.");
         }
     }
 
@@ -62,7 +62,7 @@ public class ActorService {
 
     public String addActor(Actor actor) {
         actorRepository.save(actor);
-
+        
         return "Created";
     }
 }

@@ -8,12 +8,20 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 public class ExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler(value = NotFoundException.class)     // value takes a list of exception classes
-    public ResponseEntity<Object> handleMovieNotFoundException(NotFoundException movieNotFoundException) {
+    public ResponseEntity<Object> handleNotFoundException(NotFoundException notFoundException) {
         // Create object of movieException and parse message and http status
-        ResponseException movieException = new ResponseException(movieNotFoundException.getMessage(),
+        ResponseException exception = new ResponseException(notFoundException.getMessage(),
                 HttpStatus.NOT_FOUND);
 
         // Return ResponseEntity with movieException object
-        return new ResponseEntity<>(movieException, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(value = BadRequestException.class)
+    public ResponseEntity<Object> handleBadRequestException(BadRequestException badRequestException) {
+        ResponseException exception = new ResponseException(badRequestException.getMessage(),
+                HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
     }
 }
