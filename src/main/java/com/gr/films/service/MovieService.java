@@ -94,4 +94,16 @@ public class MovieService {
             return "Couldn't find movie with id: " + id;
         }
     }
+
+    public String deleteMovie(Long id) {
+        Movie movieInDatabase = movieRepository.findByMovieId(id);
+
+        if (movieInDatabase != null) {
+            movieRepository.deleteById(id);
+            return "Deleted " + movieInDatabase.getTitle();
+        }
+        else {
+            return "The id: " + id + " doesn't exist in the database";
+        }
+    }
 }

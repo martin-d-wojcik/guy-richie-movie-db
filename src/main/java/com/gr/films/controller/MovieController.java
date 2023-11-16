@@ -45,4 +45,10 @@ public class MovieController {
     public String updateMovie(@PathVariable("id") Long id, @RequestBody Movie movie) {
         return movieService.updateMovie(movie, id);
     }
+
+    @DeleteMapping("movie/{id}")
+    public String deleteMovie(@PathVariable("id") Long id) {
+        return movieService.deleteMovie(id);
+    }
+
 }
