@@ -37,7 +37,12 @@ public class MovieController {
     }
 
     @PostMapping(value = "/movie/add", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Object> addMovie(@Valid @RequestBody Movie movie) {
+    public ResponseEntity<Object> addMovie(@RequestBody Movie movie) {
         return movieService.addMovie(movie);
+    }
+
+    @PutMapping("movie/{id}")
+    public String updateMovie(@PathVariable("id") Long id, @RequestBody Movie movie) {
+        return movieService.updateMovie(movie, id);
     }
 }

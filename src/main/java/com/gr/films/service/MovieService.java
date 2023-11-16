@@ -74,4 +74,24 @@ public class MovieService {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public String updateMovie(Movie movie, Long id) {
+        Movie movieInDatabase = movieRepository.findByMovieId(id);
+
+        if (movieInDatabase != null) {
+            movieInDatabase.setTitle(movie.getTitle());
+            movieInDatabase.setWriter(movie.getWriter());
+            movieInDatabase.setDirector(movie.getDirector());
+            movieInDatabase.setGenre(movie.getGenre());
+            movieInDatabase.setAwards(movie.getAwards());
+            movieInDatabase.setReleaseYear(movie.getReleaseYear());
+
+            movieRepository.save(movieInDatabase);
+
+            return "Updated.";
+        }
+        else {
+            return "Couldn't find movie with id: " + id;
+        }
+    }
 }
