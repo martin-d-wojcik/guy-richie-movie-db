@@ -27,7 +27,7 @@ public class Actor {
     public Actor() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

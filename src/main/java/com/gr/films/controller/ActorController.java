@@ -37,12 +37,18 @@ public class ActorController {
     }
 
     @PostMapping(value = "actor/add", consumes = "application/json", produces = "application/json")
-    public String addActor(@RequestBody Actor actor) {
+    public ResponseEntity<Object> addActor(@RequestBody Actor actor) {
+        Long mId = actor.getMovieId();
         return actorService.addActor(actor);
     }
 
     // TODO: delete actor
     // TODO: update actor
+    @PutMapping(value = "actor/{id}")
+    public ResponseEntity<Object> updateActor(@PathVariable("id") Long id, @RequestBody Actor actor) {
+
+    }
+
     // TODO: get actors by movie id
     // TODO: get actors by movie title
 }

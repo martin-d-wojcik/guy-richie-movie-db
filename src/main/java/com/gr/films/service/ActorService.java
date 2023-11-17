@@ -1,8 +1,11 @@
 package com.gr.films.service;
 
+import com.gr.films.exception.BadRequestException;
 import com.gr.films.exception.NotFoundException;
 import com.gr.films.model.Actor;
+import com.gr.films.model.Movie;
 import com.gr.films.repository.ActorRepository;
+import com.gr.films.repository.MovieRepository;
 import com.gr.films.response.ApiError;
 import com.gr.films.response.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +21,15 @@ public class ActorService {
 
     // @Autowired
     ActorRepository actorRepository;
+    MovieRepository movieRepository;
     List<Actor> listOfActors;
     Actor actor;
     ApiError apiError;
 
     @Autowired
-    public ActorService(ActorRepository actorRepository) {
+    public ActorService(ActorRepository actorRepository, MovieRepository movieRepository) {
         this.actorRepository = actorRepository;
+        this.movieRepository = movieRepository;
         listOfActors = new ArrayList<Actor>();
     }
 
@@ -60,9 +65,28 @@ public class ActorService {
         return actorRepository.findById(actorId).get();
     }
 
-    public String addActor(Actor actor) {
+    public ResponseEntity<Object> addActor(Actor actor) {
+        Actor actorInDb = actorRepository.findByActorId(actor.getId());
+
+        // Make sure the id doesn't already exist in the database
+        if (actorInDb != null) {
+            throw new BadRequestException("There is already an actor in the database with the id: " +
+                    actor.getId());
+        } else if (actor.getId() == null) {
+            // throw exception if there's no id in the request body
+            throw new BadRequestException("Id can't be empty");
+        }
+
+        // Make sure the there is a movie with the provided movie id
+        Movie movieInDb = movieRepository.findByMovieId(actor.getMovieId());
+        if (movieInDb == null) {
+            throw new BadRequestException("There's no movie in the database with the movie id: " +
+                    actor.getMovieId());
+        }
+
         actorRepository.save(actor);
         
-        return "Created";
+        return new ResponseEntity<>("Created " + actor.getFirstName() + " " + actor.getLastName()
+                , HttpStatus.OK);
     }
 }
