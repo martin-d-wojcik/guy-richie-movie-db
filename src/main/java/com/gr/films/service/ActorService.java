@@ -107,4 +107,16 @@ public class ActorService {
 
         return new ResponseEntity<>("Updated.", HttpStatus.OK);
     }
+
+    public ResponseEntity<Object> deleteActor(Long id) {
+        Actor actorInDatabase = actorRepository.findByActorId(id);
+
+        if (actorInDatabase != null) {
+            actorRepository.deleteById(id);
+            return new ResponseEntity<>("Deleted " + actorInDatabase.getFirstName() +
+                    " " + actorInDatabase.getLastName(), HttpStatus.OK);
+        } else {
+            throw new NotFoundException("There is no actor with the id: " + id);
+        }
+    }
 }

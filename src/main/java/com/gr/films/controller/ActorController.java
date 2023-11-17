@@ -42,7 +42,10 @@ public class ActorController {
         return actorService.addActor(actor);
     }
 
-    // TODO: delete actor
+    @DeleteMapping(value = "actor/{id}")
+    public ResponseEntity<Object> deleteActor(@PathVariable("id") Long id) {
+        return actorService.deleteActor(id);
+    }
 
     @PutMapping(value = "actor/{id}")
     public ResponseEntity<Object> updateActor(@PathVariable("id") Long id, @RequestBody Actor actor) {
