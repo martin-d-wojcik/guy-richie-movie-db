@@ -47,6 +47,7 @@ public class MovieService {
     public ResponseEntity<List<Movie>> getMoviesByReleaseYear(int year) {
         listOfMovies = movieRepository.findByReleaseYear(year);
 
+        // Return NotFound if no movies where found released that year
         if (listOfMovies.isEmpty()) {
             throw new NotFoundException("Couldn't find any movies released in: " + year);
         }
@@ -55,7 +56,13 @@ public class MovieService {
     }
 
     public ResponseEntity<Object> addMovie(Movie movie) {
-        if (movie.getId() == null) {
+        // Make sure the id doesn't already exist in the database
+        Movie movieInDatabase = movieRepository.findByMovieId(movie.getId());
+
+        if (movieInDatabase != null) {
+            throw new BadRequestException("There is already an movie in the database with that id.");
+        } else if (movie.getId() == null) {
+            // throw BadRequestException if there's no id in the request body
             throw new BadRequestException("Id can't be empty");
         }
 

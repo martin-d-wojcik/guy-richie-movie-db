@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 @Table(name = "movie")
 public class Movie {
 
-    // @NotBlank(message = "Id is required")
     @Id
     private Long id;
 

@@ -40,4 +40,9 @@ public class ActorController {
     public String addActor(@RequestBody Actor actor) {
         return actorService.addActor(actor);
     }
+
+    // TODO: delete actor
+    // TODO: update actor
+    // TODO: get actors by movie id
+    // TODO: get actors by movie title
 }
