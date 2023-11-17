@@ -43,10 +43,10 @@ public class ActorController {
     }
 
     // TODO: delete actor
-    // TODO: update actor
+
     @PutMapping(value = "actor/{id}")
     public ResponseEntity<Object> updateActor(@PathVariable("id") Long id, @RequestBody Actor actor) {
-
+        return actorService.updateActor(id, actor);
     }
 
     // TODO: get actors by movie id

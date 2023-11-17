@@ -89,4 +89,22 @@ public class ActorService {
         return new ResponseEntity<>("Created " + actor.getFirstName() + " " + actor.getLastName()
                 , HttpStatus.OK);
     }
+
+    public ResponseEntity<Object> updateActor(Long id, Actor actor) {
+        Actor actorInDatabase = actorRepository.findByActorId(id);
+
+        if (actorInDatabase == null) {
+            throw new NotFoundException("There's no actor in the database with the id: " + id);
+        }
+
+        Movie movieInDb = movieRepository.findByMovieId(actor.getMovieId());
+        if (movieInDb == null) {
+            throw new BadRequestException("There's no movie in the database with the movie id: " +
+                    actor.getMovieId());
+        }
+
+        actorRepository.save(actor);
+
+        return new ResponseEntity<>("Updated.", HttpStatus.OK);
+    }
 }
