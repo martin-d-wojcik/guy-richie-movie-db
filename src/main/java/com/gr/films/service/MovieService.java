@@ -2,7 +2,9 @@ package com.gr.films.service;
 
 import com.gr.films.exception.BadRequestException;
 import com.gr.films.exception.NotFoundException;
+import com.gr.films.model.Actor;
 import com.gr.films.model.Movie;
+import com.gr.films.repository.ActorRepository;
 import com.gr.films.repository.MovieRepository;
 import com.gr.films.response.ApiError;
 import com.gr.films.response.ResponseHandler;

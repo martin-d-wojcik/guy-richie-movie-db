@@ -1,5 +1,6 @@
 package com.gr.films.controller;
 
+import com.gr.films.model.Actor;
 import com.gr.films.model.Movie;
 import com.gr.films.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,8 @@ public class MovieController {
         return movieService.updateMovie(movie, id);
     }
 
-    @DeleteMapping("movie/{id}")
+    @DeleteMapping("/movie/{id}")
     public ResponseEntity<Object> deleteMovie(@PathVariable("id") Long id) {
         return movieService.deleteMovie(id);
     }
-
 }

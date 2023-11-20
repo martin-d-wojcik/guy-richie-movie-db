@@ -38,7 +38,6 @@ public class ActorController {
 
     @PostMapping(value = "actor/add", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> addActor(@RequestBody Actor actor) {
-        Long mId = actor.getMovieId();
         return actorService.addActor(actor);
     }
 
@@ -52,6 +51,8 @@ public class ActorController {
         return actorService.updateActor(id, actor);
     }
 
-    // TODO: get actors by movie id
-    // TODO: get actors by movie title
+    @GetMapping("/movie/{id}/actors")
+    public ResponseEntity<Object> getActorsbyMovieId(@PathVariable("id") Long movieId) {
+        return actorService.getActorsByMovieId(movieId);
+    }
 }

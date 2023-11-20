@@ -119,4 +119,16 @@ public class ActorService {
             throw new NotFoundException("There is no actor with the id: " + id);
         }
     }
+
+    public ResponseEntity<Object> getActorsByMovieId(Long movieId) {
+
+        // Get the movie title
+        String title = movieRepository.findByMovieId(movieId).getTitle();
+
+        // Get the list of actors by movie id
+        List<Object> listOfActors = actorRepository.findActorNameByMovieId(movieId);
+
+        // Return an array of the actors
+        return ResponseHandler.createArrayResponseBody(title, listOfActors);
+    }
 }
