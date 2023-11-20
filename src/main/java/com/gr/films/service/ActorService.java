@@ -87,7 +87,7 @@ public class ActorService {
         actorRepository.save(actor);
         
         return new ResponseEntity<>("Created " + actor.getFirstName() + " " + actor.getLastName()
-                , HttpStatus.OK);
+                , HttpStatus.CREATED);
     }
 
     public ResponseEntity<Object> updateActor(Long id, Actor actor) {

@@ -70,7 +70,7 @@ public class MovieService {
 
         movieRepository.save(movie);
 
-        return new ResponseEntity<>("Created " + movie.getTitle(), HttpStatus.OK);
+        return new ResponseEntity<>("Created " + movie.getTitle(), HttpStatus.CREATED);
     }
 
     public ResponseEntity<Object> updateMovie(Movie movie, Long id) {

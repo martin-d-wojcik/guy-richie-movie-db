@@ -36,17 +36,17 @@ public class ActorController {
         return actorService.getActorById(id);
     }
 
-    @PostMapping(value = "actor/add", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/actor", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> addActor(@RequestBody Actor actor) {
         return actorService.addActor(actor);
     }
 
-    @DeleteMapping(value = "actor/{id}")
+    @DeleteMapping(value = "/actor/{id}")
     public ResponseEntity<Object> deleteActor(@PathVariable("id") Long id) {
         return actorService.deleteActor(id);
     }
 
-    @PutMapping(value = "actor/{id}")
+    @PutMapping(value = "/actor/{id}")
     public ResponseEntity<Object> updateActor(@PathVariable("id") Long id, @RequestBody Actor actor) {
         return actorService.updateActor(id, actor);
     }
