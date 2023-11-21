@@ -13,6 +13,6 @@ public interface ActorRepository extends JpaRepository<Actor, Long> {
     @Query(value="SELECT * FROM actor WHERE id = ?1", nativeQuery=true)
     Actor findByActorId(Long id);
 
-    @Query(value="SELECT first_name, last_name FROM actor WHERE movie_id = ?1", nativeQuery=true)
-    List<Object> findActorNameByMovieId(Long movieId);
+    @Query(value="SELECT * FROM actor WHERE movie_id = ?1", nativeQuery=true)
+    List<Actor> findActorNameByMovieId(Long movieId);
 }

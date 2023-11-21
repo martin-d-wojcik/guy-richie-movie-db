@@ -1,8 +1,10 @@
-# Guy Ritchie Movies
+# Guy Ritchie Movies     
+
 A Spring Boot application with an PostgreSQL database soon to be containerized.
 The database consists of two tables, movies and actors. 
 ---
-## Installation
+## Installation       
+
 Install manually by... TODO   
 Install by running the app as a docker container. Not yet implemented.
 ---

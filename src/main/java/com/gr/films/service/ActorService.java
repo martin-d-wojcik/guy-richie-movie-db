@@ -8,13 +8,18 @@ import com.gr.films.repository.ActorRepository;
 import com.gr.films.repository.MovieRepository;
 import com.gr.films.response.ApiError;
 import com.gr.films.response.ResponseHandler;
+import org.json.JSONArray;
+import org.json.JSONML;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ActorService {
@@ -121,14 +126,21 @@ public class ActorService {
     }
 
     public ResponseEntity<Object> getActorsByMovieId(Long movieId) {
-
         // Get the movie title
         String title = movieRepository.findByMovieId(movieId).getTitle();
 
         // Get the list of actors by movie id
-        List<Object> listOfActors = actorRepository.findActorNameByMovieId(movieId);
+        List<Actor> listOfActors = actorRepository.findActorNameByMovieId(movieId);
+        List<Object> listOfNames = new ArrayList<>();
 
-        // Return an array of the actors
-        return ResponseHandler.createArrayResponseBody(title, listOfActors);
+        // Add only first- and lastname to the array in the response
+        for (Actor actor : listOfActors) {
+            Map<String, Object> payload = new HashMap<>();
+            payload.put("firstName", actor.getFirstName());
+            payload.put("lastName", actor.getLastName());
+            listOfNames.add(payload);
+        }
+
+        return ResponseHandler.createArrayInBody(title, listOfNames);
     }
 }

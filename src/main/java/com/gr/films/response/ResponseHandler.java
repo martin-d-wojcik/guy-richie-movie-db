@@ -20,11 +20,10 @@ public class ResponseHandler {
         return new ResponseEntity<>(responseBody, httpStatus);
     }
 
-    // Method returns an array with a name and a list of objects
-    public static ResponseEntity<Object> createArrayResponseBody(String arrayName, List<Object> listOfObjects) {
-        Map<String, Object> objectBody = new HashMap<>();
-        objectBody.put(arrayName, listOfObjects);
+    public static ResponseEntity<Object> createArrayInBody(String name, List<Object> actorList) {
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put(name, actorList);
 
-        return new ResponseEntity<>(objectBody, HttpStatus.OK);
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 }

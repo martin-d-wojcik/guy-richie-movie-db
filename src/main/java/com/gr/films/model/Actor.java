@@ -24,6 +24,11 @@ public class Actor {
         this.birthCountry = birthCountry;
     }
 
+    public Actor(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public Actor() {
     }
 
