@@ -227,12 +227,14 @@ Response body:
 {
   "Lock, Stock and Two Smoking Barrels": 
     [
-      "Vinnie",
-      "Jones"
-    ],
-    [
-      "Jason",
-      "Statham"
+      {
+        "firstName": Vinnie",
+        "lastName": "Jones"
+      },
+      {
+        "firstName": "Jason",
+        "lastname": "Statham"
+      }
     ]
 }
 ```
