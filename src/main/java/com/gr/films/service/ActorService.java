@@ -128,12 +128,19 @@ public class ActorService {
     public ResponseEntity<Object> getActorsByMovieId(Long movieId) {
         // Get the movie title
         String title = movieRepository.findByMovieId(movieId).getTitle();
+        if (title.isEmpty()) {
+            throw new NotFoundException("Couldn't find aby movie with the movie id " + movieId);
+        }
 
         // Get the list of actors by movie id
         List<Actor> listOfActors = actorRepository.findActorNameByMovieId(movieId);
+        if (listOfActors.isEmpty()) {
+            throw new NotFoundException("Couldn't find any actor with the movie id " + movieId);
+        }
+
+        // Create new list with only first- and lastname
         List<Object> listOfNames = new ArrayList<>();
 
-        // Add only first- and lastname to the array in the response
         for (Actor actor : listOfActors) {
             Map<String, Object> payload = new HashMap<>();
             payload.put("firstName", actor.getFirstName());
