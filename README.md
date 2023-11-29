@@ -1,10 +1,10 @@
-# Guy Ritchie Movies     
+# Guy Ritchie Movies REST service
+This is Spring Boot app that uses a PostgreSQL database. The app is containerized with Docker Compose.
+The database has two tables, Movies and Actors.
 
-A Spring Boot application with an PostgreSQL database soon to be containerized.
-The database consists of two tables, movies and actors. 
 ---
 ## Installation
-Build and start the by running the command from project root:
+Build and start the by running the command from project root
 ```
 docker-compose up
 ```
